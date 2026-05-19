@@ -29,7 +29,7 @@
 
     <div id="content">
         <div id="action-btns">
-            <button>Adicionar <i class="ph ph-plus-circle"></i></button>
+            <button>Adicionar<i class="ph ph-plus-circle"></i></button>
             <button>Editar <i class="ph ph-note-pencil"></i></button>
         </div>
 
