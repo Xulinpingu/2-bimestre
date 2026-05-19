@@ -24,7 +24,7 @@
     <div id="search-bar">
         <i class="ph ph-magnifying-glass"></i>
         <input type="text">
-        <i class="ph ph-tag"></i>
+        <button><i class="ph ph-tag"></i></button>
     </div>
 
     <div id="content">
