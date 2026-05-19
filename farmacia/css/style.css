@@ -1,0 +1,21 @@
+:root {
+    --bg-page: #EAF4F4;
+    --auxiliar-color: #E0E0E0;
+    --secondary-color: #2A6F97;
+    --terciary-color: #43AA8B;
+    --highlight-color: #E63946;
+    --text-color: #1F2933;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    color: var(--text-color);
+}
+
+header, footer{
+    background: var(--secondary-color);
+    width: 100%;
+}
