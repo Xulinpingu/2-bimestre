@@ -18,8 +18,10 @@
 
 body{
     background-color: var(--bg-page);
-    width: 100vw;
-    height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* HEADER E FOOTER */
@@ -33,9 +35,15 @@ header, footer{
     position: relative;
 }
 
+footer {
+    margin-top: auto;
+}
+
 header h1{
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
 }
 
 header img{
@@ -83,7 +91,7 @@ footer h1{
     height: auto;
 }
 
-/* Btns adicionar e editar */
+/* Btns add e edit */
 
 .action-btns {
     display: flex;
@@ -104,7 +112,7 @@ footer h1{
     border-radius: 10px;
 }
 
-/* tabela */
+/* table */
 .table {
     width: 350px;
     height: 300px;
@@ -134,4 +142,89 @@ thead {
 
 tbody {
     background: var(--auxiliar-color);
+}
+
+/* Add & edit page */
+
+.formdiv {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+    padding: 20px;
+    margin-top: 50px;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    -webkit-box-shadow: -5px 6px 9px 8px rgba(138,138,138,0.57); 
+    box-shadow: -5px 6px 9px 8px rgba(138,138,138,0.57);
+}
+
+form input {
+    background: var(--auxiliar-color);
+    margin: 8px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    color: #333;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+form input::placeholder {
+    color: #999;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+form input:focus {
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.12);
+    outline: none;
+}
+
+form input:focus::placeholder {
+    opacity: 0;
+}
+
+.form button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: var(--terciary-color);
+    font-size: 23px;
+
+    width: auto;
+    padding: 10px 20px;
+
+    border-radius: 10px;
+}
+
+.voltar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    align-self: flex-start;
+    margin-left: 20px;
+    background-color: var(--highlight-color);
+    font-size: 23px;
+
+    width: 175px;
+    height: 45px;
+
+    border-radius: 10px;
 }

@@ -21,23 +21,20 @@
 <body>
     <?php include "includes/header.php" ?>
 
-    <div>
-    <form action="POST">
-        <label for="nome">Nome</label>
-        <input type="text">
+    <div class="formdiv">
+        <form class="form" action="" method="post">
+            <input type="text" placeholder="Nome">
 
-        <label for="fabricante">Frabricante</label>
-        <input type="text">
+            <input type="text" placeholder="Fabricante">
 
-        <label for="preco">Preço</label>
-        <input type="text">
+            <input type="text" placeholder="Preço">
 
-        <label for="estoque">Estoque</label>
-        <input type="text">
-        <button class="add-btn">Adicionar<i class="ph ph-plus-circle"></i></button>
-    </form>
+            <input type="text" placeholder="Estoque">
 
-        <button onclick="window.location.href='index.php'" class="voltar">Voltar</button>
+            <button class="btn">Adicionar<i class="ph ph-plus-circle"></i></button>
+        </form>
+
+        <button onclick="window.location.href='index.php'" class="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
     </div>
 
 
