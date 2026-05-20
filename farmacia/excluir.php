@@ -7,6 +7,6 @@
         <label for="deletar">Digite DELETE para confirmar a exclusão do item <?php ?></label>
         <input type="text" name="deletar">
         
-        <button class="add-btn">Excluir<i class="ph ph-note-pencil"></i></button>
+        <button class="delete-btn">Excluir<i class="ph ph-note-pencil"></i></button>
     </form> 
 </div>

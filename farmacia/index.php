@@ -21,32 +21,39 @@
 <body>
     <?php include "includes/header.php" ?>
     
-    <div id="search-bar">
+    <div class="search-bar">
         <i class="ph ph-magnifying-glass"></i>
         <input type="text">
         <button><i class="ph ph-tag"></i></button>
     </div>
 
-    <div id="content">
-        <div id="action-btns">
-            <button>Adicionar<i class="ph ph-plus-circle"></i></button>
-            <button>Editar <i class="ph ph-note-pencil"></i></button>
+    <div class="content">
+        <div class="action-btns">
+            <button onclick="window.location.href='cadastro.php'" class="btn">Adicionar<i class="ph ph-plus-circle"></i></button>
+            <button onclick="window.location.href='editar.php'" class="btn">Editar <i class="ph ph-note-pencil"></i></button>
         </div>
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Fabricante</th>
-                <th>Preço</th>
-                <th>Estoque</th>
-                <th></th>
-            </tr>
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Fabricante</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-            <tr>
+                <tbody>
+                    <tr class="tbody">
 
-            </tr>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     <?php include "includes/footer.php" ?>

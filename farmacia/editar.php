@@ -35,10 +35,10 @@
         <label for="estoque">Estoque</label>
         <input type="text">
         
-        <button class="add-btn">Editar<i class="ph ph-note-pencil"></i></button>
+        <button class="edit-btn">Editar<i class="ph ph-note-pencil"></i></button>
     </form>
 
-        <button class="voltar">Voltar</button>
+        <button onclick="window.location.href='index.php'" class="voltar">Voltar</button>
     </div>
 
 

@@ -37,7 +37,7 @@
         <button class="add-btn">Adicionar<i class="ph ph-plus-circle"></i></button>
     </form>
 
-        <button class="voltar">Voltar</button>
+        <button onclick="window.location.href='index.php'" class="voltar">Voltar</button>
     </div>
 
 
