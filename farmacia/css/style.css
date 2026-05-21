@@ -3,7 +3,7 @@
     --auxiliar-color: #E0E0E0;
     --secondary-color: #2A6F97;
     --terciary-color: #43AA8B;
-    --highlight-color: #E63946;
+    --highlight-color: #e63946;
     --text-color: #1F2933;
 }
 
@@ -129,6 +129,7 @@ footer h1{
 table {
     width: 100%;
     border-collapse: collapse;
+    text-align: center;
 }
 
 thead {
@@ -233,10 +234,19 @@ form input:focus::placeholder {
     border-radius: 10px;
 }
 
+.delete-icon {
+    background-color: transparent;
+    font-size: 25px;
+}
+
+.delete-icon i {
+    color: var(--highlight-color);
+}
+
 /* EXLCUIR.PHP */
 .delete-box{
     position: absolute;
-    top: 25%;
+    bottom: 5%;
     margin: 12.5%;
     width: 75%;
     background: var(--auxiliar-color);

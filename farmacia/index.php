@@ -33,6 +33,13 @@
             <button onclick="window.location.href='editar.php'" class="btn">Editar <i class="ph ph-note-pencil"></i></button>
         </div>
 
+        <?php 
+            if (isset($_GET['id'])) {
+                $id_produto = $_GET['id'];
+                include "excluir.php";
+            }
+        ?>
+
         <div class="table">
             <table>
                 <thead>
@@ -46,17 +53,45 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr class="tbody">
-                        
-                    </tr>
-                </tbody>
+                <?php
+                    include "config/conexao.php";
+
+                    $sql = "SELECT * FROM produtos ORDER BY nome ASC";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
+
+                    $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    if ($produtos) {
+                        foreach ($produtos as $produto) {
+                            echo "<tr class='tbody'>";
+                            echo "<td>" . $produto['id'] . "</td>";
+                            echo "<td>" . $produto['nome'] . "</td>";
+                            echo "<td>" . $produto['fabricante'] . "</td>";
+                            echo "<td>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
+                            echo "<td>" . $produto['estoque'] . "</td>";
+                            echo "<td><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button></td>";
+                            echo "</tr>";
+                        }
+                    }
+                    else {
+                        echo "<tr class='tbody'><td colspan='6'>Nenhum produto encontrado.</td></tr>";
+                    }
+
+                ?>
             </table>
         </div>
 
     </div>
 
+    <script>
+        function showDelete(id) {
+            window.location.href = '?id=' + id;
+        }
+    </script>
+
     <?php include "includes/footer.php" ?>
 </body>
 
 </html>
+
