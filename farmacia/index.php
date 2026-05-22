@@ -52,34 +52,39 @@
                         <th></th>
                     </tr>
                 </thead>
-
-                <?php
-                    include "config/conexao.php";
-
-                    $sql = "SELECT * FROM produtos ORDER BY nome ASC";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute();
-
-                    $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                    if ($produtos) {
-                        foreach ($produtos as $produto) {
-                            echo "<tr class='tbody'>";
-                            echo "<td>" . $produto['id'] . "</td>";
-                            echo "<td>" . $produto['nome'] . "</td>";
-                            echo "<td>" . $produto['fabricante'] . "</td>";
-                            echo "<td>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
-                            echo "<td>" . $produto['estoque'] . "</td>";
-                            echo "<td><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button></td>";
-                            echo "</tr>";
-                        }
-                    }
-                    else {
-                        echo "<tr class='tbody'><td colspan='6'>Nenhum produto encontrado.</td></tr>";
-                    }
-
-                ?>
             </table>
+
+            <div class="table-body">
+                <table>
+                    <tbody>
+                        <?php
+                            include "config/conexao.php";
+
+                            $sql = "SELECT * FROM produtos ORDER BY id ASC";
+                            $stmt = $pdo->prepare($sql);
+                            $stmt->execute();
+
+                            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                            if ($produtos) {
+                                foreach ($produtos as $produto) {
+                                    echo "<tr class='tbody'>";
+                                    echo "<td>" . $produto['id'] . "</td>";
+                                    echo "<td>" . $produto['nome'] . "</td>";
+                                    echo "<td>" . $produto['fabricante'] . "</td>";
+                                    echo "<td>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
+                                    echo "<td>" . $produto['estoque'] . "</td>";
+                                    echo "<td><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button></td>";
+                                    echo "</tr>";
+                                }
+                            }
+                            else {
+                                echo "<tr class='tbody'><td colspan='6'>Nenhum produto encontrado.</td></tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>

@@ -1,3 +1,46 @@
+<?php
+  include "config/conexao.php";
+
+
+  $sucesso = false;
+  $mensagemErro = null;
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+      $nomeNovo = $_POST['nome'] ?? null;
+      $fabriNovo = $_POST['fabricante'] ?? null;
+      $precoNovo = $_POST['preco'] ?? null;
+      $estoqueNovo = $_POST['estoque'] ?? null;
+
+
+      if (!empty($nomeNovo) && !empty($fabriNovo) && !empty($precoNovo) && !empty($estoqueNovo)) {
+          try {
+              $sql = "INSERT INTO produtos (nome, fabricante, preco, estoque)
+                      VALUES (:nome, :fabricante, :preco, :estoque)";
+
+              $stmt = $pdo->prepare($sql);
+
+              $stmt->execute([
+                  ':nome' => $nomeNovo,
+                  ':fabricante' => $fabriNovo,
+                  ':preco' => $precoNovo,
+                  ':estoque' => $estoqueNovo
+              ]);
+              header("Location: cadastro.php?sucesso=1");
+              exit;
+          } catch (PDOException $e) {
+              $mensagemErro = "Erro ao adicionar o produto: " . $e->getMessage();
+          }
+      } else {
+          $mensagemErro = "Preencha todos os campos!";
+      }
+  }
+
+  if (isset($_GET['sucesso']) && $_GET['sucesso'] == 1) {
+      $sucesso = true;
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -23,13 +66,18 @@
 
     <div class="formdiv">
         <form class="form" action="" method="post">
-            <input type="text" placeholder="Nome">
 
-            <input type="text" placeholder="Fabricante">
+            <label>Nome:</label>
+            <input type="text" name="nome" placeholder="Nome">
 
-            <input type="text" placeholder="Preço">
+            <label>Fabricante:</label>
+            <input type="text" name="fabricante" placeholder="Fabricante">
 
-            <input type="text" placeholder="Estoque">
+            <label>Preço:</label>
+            <input type="text" name="preco" placeholder="Preço">
+
+            <label>Estoque:</label>
+            <input type="text" name="estoque" placeholder="Estoque">
 
             <button class="btn">Adicionar<i class="ph ph-plus-circle"></i></button>
         </form>
@@ -37,6 +85,15 @@
         <button onclick="window.location.href='index.php'" class="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
     </div>
 
+    <!-- Mensagem de sucesso -->
+    <?php if ($sucesso == true) { ?>
+        <div class="mensagem sucesso">Produto adicionado com sucesso!</div>
+    <?php } ?>
+
+    <!-- Mensagem de erro -->
+    <?php if ($mensagemErro) { ?>
+        <div class="mensagem erro"><?php echo $mensagemErro; ?></div>
+    <?php } ?>
 
     <?php include "includes/footer.php" ?>
 </body>
