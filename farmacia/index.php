@@ -108,7 +108,7 @@ else{
                                     echo "<td>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
                                     echo "<td>" . $produto['estoque'] . "</td>";
                                     echo "<td><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button></td>";
-                                    echo "<td><button class='edit-icon' onclick=\"window.location.href='editar.php'\"><i class='ph ph-note-pencil'></i></button></td>";
+                                    echo "<td><button class='edit-icon' onclick=\"window.location.href='editar.php?id=" . $produto['id'] . "'\"><i class='ph ph-note-pencil'></i></button></td>";
                                     echo "</tr>";
                                 }
                             } else {
