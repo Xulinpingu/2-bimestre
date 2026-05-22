@@ -11,6 +11,7 @@
     margin: 0;
     padding: 0;
     border: 0;
+    box-sizing: border-box;
 
     color: var(--text-color);
     font-family: sans-serif;
@@ -18,7 +19,7 @@
 
 body{
     background-color: var(--bg-page);
-    min-width: 100vw;
+    min-width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -158,10 +159,11 @@ footer h1{
 
 /* table */
 .table {
-    width: 350px;
+    width: 90%;
+    margin-bottom: 50px;
 
     border-radius: 10px;
-    overflow: hidden;
+    overflow: auto;
 
     -webkit-box-shadow: -5px 6px 9px 8px rgba(138,138,138,0.57); 
     box-shadow: -5px 6px 9px 8px rgba(138,138,138,0.57);
@@ -267,8 +269,6 @@ form input:focus::placeholder {
     align-items: center;
     justify-content: space-around;
 
-    align-self: flex-start;
-    margin-left: 20px;
     background-color: var(--highlight-color);
     font-size: 23px;
 
@@ -335,12 +335,17 @@ form input:focus::placeholder {
 
 /* EXLCUIR.PHP */
 .delete-box{
-    position: absolute;
-    bottom: 5%;
-    margin: 12.5%;
     width: 75%;
     background: var(--auxiliar-color);
     border-radius: 10px;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    bottom: auto;
+    z-index: 1001;
 }
 
 .delete-box .delete-h{
@@ -355,7 +360,6 @@ form input:focus::placeholder {
 }
 
 .delete-box form{
-    
     flex-direction: column;
     align-items: center;
 }
@@ -374,4 +378,60 @@ form input:focus::placeholder {
 .delete-box .delete-h, .delete-box form{
     padding: 10px 20px;
     display: flex;
+}
+
+.overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+/* CSS PARA COMPUTADOR */
+@media (min-width: 768px){
+    /* header */
+    header img{
+        height: 7%;
+        width: 7%;
+    }
+
+    header h1{
+        font-size: 70px;
+    }
+
+    /* BARRA DE PESQUISA */
+    /* input */
+    .search-bar{
+        width: 95%;
+        margin: 8px 2.5%;
+    }
+
+    .search-bar input{
+        width: 95%;
+    }
+
+    /* dropdwon */
+    .dropdown:hover .dropdown-content {
+        display: block;
+        right: 0.5%;
+    }
+
+    /* EXLCUIR.PHP */
+    .delete-box{
+        width: 45%;
+    }
+}
+
+@media(min-width: 1024px){
+    /* EXLCUIR.PHP */
+    .delete-box{
+        width: 30%;
+    }
+}
+
+@media(min-width: 1440px){
+    /* EXLCUIR.PHP */
+    .delete-box{
+        width: 20%;
+    }
 }

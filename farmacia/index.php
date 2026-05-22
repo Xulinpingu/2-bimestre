@@ -41,7 +41,7 @@ else{
     
     <div class="search-bar">
         <i class="ph ph-magnifying-glass"></i>
-        <input type="text" placeholder="<?= $search_placeholder; ?>" id="search-input">
+        <input type="text" autofocus placeholder="<?= $search_placeholder; ?>" id="search-input">
         <div class="dropdown">
             <button class="dropdownbtn"><i class="ph ph-tag"></i></button>
             <div class="dropdown-content">
@@ -78,46 +78,54 @@ else{
                         <th></th>
                     </tr>
                 </thead>
-            </table>
+                <tbody class="table-body">
+                    <?php
+                        include "config/conexao.php";
 
-            <div class="table-body">
-                <table>
-                    <tbody>
-                        <?php
-                            include "config/conexao.php";
+                        if (isset($_GET['action'])) {
+                            $sql = "SELECT * FROM produtos ORDER BY id ASC";
+                            $stmt = $pdo->prepare($sql);
+                        } elseif (isset($partesUrl['query'])) {
+                            parse_str($partesUrl['query'], $queryParams);
+                            $firstKey = key($queryParams);
+                            $firstVal = reset($queryParams);
 
-                            if (isset($partesUrl['query'])) {
-                                $tag_url_final = end($tag_url_partes);
-                                $sql = "SELECT * FROM produtos WHERE $tag_url LIKE :valor ORDER BY id ASC";
+                            $allowedCols = ['id','nome','fabricante','preco','estoque'];
+                            if (in_array($firstKey, $allowedCols)) {
+                                $sql = "SELECT * FROM produtos WHERE $firstKey LIKE :valor ORDER BY id ASC";
                                 $stmt = $pdo->prepare($sql);
-                                $stmt->bindValue(':valor', "%$tag_url_final%", PDO::PARAM_STR);
+                                $stmt->bindValue(':valor', "%$firstVal%", PDO::PARAM_STR);
                             } else {
                                 $sql = "SELECT * FROM produtos ORDER BY id ASC";
                                 $stmt = $pdo->prepare($sql);
                             }
+                        } else {
+                            $sql = "SELECT * FROM produtos ORDER BY id ASC";
+                            $stmt = $pdo->prepare($sql);
+                        }
 
-                            $stmt->execute();
-                            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        $stmt->execute();
+                        $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                            if ($produtos) {
-                                foreach ($produtos as $produto) {
-                                    echo "<tr class='tbody'>";
-                                    echo "<td>" . $produto['id'] . "</td>";
-                                    echo "<td>" . $produto['nome'] . "</td>";
-                                    echo "<td>" . $produto['fabricante'] . "</td>";
-                                    echo "<td>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
-                                    echo "<td>" . $produto['estoque'] . "</td>";
-                                    echo "<td><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button></td>";
-                                    echo "<td><button class='edit-icon' onclick=\"window.location.href='editar.php?id=" . $produto['id'] . "'\"><i class='ph ph-note-pencil'></i></button></td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr class='tbody'><td colspan='6'>Nenhum produto encontrado.</td></tr>";
+                        if ($produtos) {
+                            foreach ($produtos as $produto) {
+                                echo "<tr class='tbody'>";
+                                echo "<td data-label='ID'>" . $produto['id'] . "</td>";
+                                echo "<td data-label='Nome'>" . $produto['nome'] . "</td>";
+                                echo "<td data-label='Fabricante'>" . $produto['fabricante'] . "</td>";
+                                echo "<td data-label='Preço'>R$ " . number_format($produto['preco'], 2, ',', '.') . "</td>";
+                                echo "<td data-label='Estoque'>" . $produto['estoque'] . "</td>";
+                                echo "<td data-label='Ações'><div class=\"actions\"><button class='delete-icon' onclick=\"showDelete(" . $produto['id'] . ")\"><i class='ph ph-trash'></i></button> <button class='edit-icon' onclick=\"window.location.href='editar.php?id=" . $produto['id'] . "'\"><i class='ph ph-note-pencil'></i></button></div></td>";
+                                echo "</tr>";
                             }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                        } else {
+                            echo "<tr class='tbody'><td colspan='6'>Nenhum produto encontrado.</td></tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+
+
         </div>
 
     </div>
@@ -125,25 +133,25 @@ else{
     <script>
         const search_input = document.getElementById('search-input');
 
-        // Preencher o campo de pesquisa com o valor atual da URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('query');
-        if (query) {
-            search_input.value = decodeURIComponent(query);
-        }
+        const allowedCols = ['id','nome','fabricante','preco','estoque'];
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+        const activeTag = (search_input.placeholder && allowedCols.includes(search_input.placeholder)) ? search_input.placeholder : 'nome';
 
-        // Adicionar evento para realizar a pesquisa apenas quando o valor mudar
-        let lastSearchValue = search_input.value; // Armazena o último valor pesquisado
+        const existing = params.get(activeTag) || params.get('query') || '';
+        if (existing) search_input.value = decodeURIComponent(existing);
+
+        let lastSearchValue = search_input.value;
         search_input.addEventListener('input', function(event) {
             const valorAtual = event.target.value;
+            if (valorAtual === lastSearchValue) return;
+            lastSearchValue = valorAtual;
 
-            // Só realiza a pesquisa se o valor for alterado
-            if (valorAtual !== lastSearchValue) {
-                lastSearchValue = valorAtual;
-                const url = new URL(window.location.href);
-                url.searchParams.set('query', encodeURIComponent(valorAtual));
-                window.location.href = url.toString();
-            }
+            ['id','nome','fabricante','preco','estoque','query'].forEach(k => params.delete(k));
+            params.set(activeTag, valorAtual);
+
+            url.search = params.toString();
+            window.location.href = url.toString();
         });
 
         function showDelete(id) {
@@ -151,7 +159,10 @@ else{
         }
 
         function SearchByTag(url_tag) {
-            window.location.href = '?' + url_tag + '=';
+            const u = new URL(window.location.href);
+            ['id','nome','fabricante','preco','estoque','query'].forEach(k => u.searchParams.delete(k));
+            u.searchParams.set(url_tag, '');
+            window.location.href = u.toString();
         }
 
 
@@ -161,4 +172,3 @@ else{
 </body>
 
 </html>
-

@@ -1,3 +1,4 @@
+<div class="overlay"></div>
 <div class="delete-box">
     <div class="delete-h">  
         <h1><i class="ph ph-warning"></i>  Cuidado!</h1>
