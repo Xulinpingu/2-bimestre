@@ -7,29 +7,36 @@
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-      $nomeNovo = $_POST['nome'] ?? null;
-      $fabriNovo = $_POST['fabricante'] ?? null;
-      $precoNovo = $_POST['preco'] ?? null;
-      $estoqueNovo = $_POST['estoque'] ?? null;
+      $nomeNovo = trim($_POST['nome'] ?? '');
+      $fabriNovo = trim($_POST['fabricante'] ?? '');
+      $precoNovo = trim($_POST['preco'] ?? '');
+      $estoqueNovo = trim($_POST['estoque'] ?? '');
 
+      if ($precoNovo !== '') {
+          $precoNovo = str_replace(',', '.', $precoNovo);
+      }
 
-      if (!empty($nomeNovo) && !empty($fabriNovo) && !empty($precoNovo) && !empty($estoqueNovo)) {
-          try {
-              $sql = "INSERT INTO produtos (nome, fabricante, preco, estoque)
-                      VALUES (:nome, :fabricante, :preco, :estoque)";
+      if (!empty($nomeNovo) && !empty($fabriNovo) && $precoNovo !== '' && $estoqueNovo !== '') {
+          if (!is_numeric($precoNovo) || !ctype_digit($estoqueNovo)) {
+              $mensagemErro = 'Preço deve ser número e estoque deve ser um valor inteiro.';
+          } else {
+              try {
+                  $sql = "INSERT INTO produtos (nome, fabricante, preco, estoque)
+                          VALUES (:nome, :fabricante, :preco, :estoque)";
 
-              $stmt = $pdo->prepare($sql);
+                  $stmt = $pdo->prepare($sql);
 
-              $stmt->execute([
-                  ':nome' => $nomeNovo,
-                  ':fabricante' => $fabriNovo,
-                  ':preco' => $precoNovo,
-                  ':estoque' => $estoqueNovo
-              ]);
-              header("Location: cadastro.php?sucesso=1");
-              exit;
-          } catch (PDOException $e) {
-              $mensagemErro = "Erro ao adicionar o produto: " . $e->getMessage();
+                  $stmt->execute([
+                      ':nome' => $nomeNovo,
+                      ':fabricante' => $fabriNovo,
+                      ':preco' => $precoNovo,
+                      ':estoque' => $estoqueNovo
+                  ]);
+                  header("Location: cadastro.php?sucesso=1");
+                  exit;
+              } catch (PDOException $e) {
+                  $mensagemErro = "Erro ao adicionar o produto: " . $e->getMessage();
+              }
           }
       } else {
           $mensagemErro = "Preencha todos os campos!";
@@ -74,15 +81,15 @@
             <input type="text" name="fabricante" placeholder="Fabricante">
 
             <label>Preço:</label>
-            <input type="text" name="preco" placeholder="Preço">
+            <input type="number" name="preco" placeholder="Preço" step="0.01" min="0" inputmode="decimal">
 
             <label>Estoque:</label>
-            <input type="text" name="estoque" placeholder="Estoque">
+            <input type="number" name="estoque" placeholder="Estoque" step="1" min="0" inputmode="numeric">
 
             <button class="btn">Adicionar<i class="ph ph-plus-circle"></i></button>
         </form>
 
-        <button onclick="window.location.href='index.php'" class="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
+        <button onclick="window.location.href='index.php'" class="btn" id="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
     </div>
 
     <!-- Mensagem de sucesso -->

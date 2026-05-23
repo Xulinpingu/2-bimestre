@@ -24,31 +24,39 @@ if (!$produto) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nome = $_POST['nome'] ?? null;
-  $fabricante = $_POST['fabricante'] ?? null;
-  $preco = $_POST['preco'] ?? null;
-  $estoque = $_POST['estoque'] ?? null;
+  $nome = trim($_POST['nome'] ?? '');
+  $fabricante = trim($_POST['fabricante'] ?? '');
+  $preco = trim($_POST['preco'] ?? '');
+  $estoque = trim($_POST['estoque'] ?? '');
 
-  if (!empty($nome) && !empty($fabricante) && !empty($preco) && $estoque !== null) {
-    try {
-      $sql = "UPDATE produtos SET nome = :nome, fabricante = :fabricante, preco = :preco, estoque = :estoque WHERE id = :id";
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute([
-        ':nome' => $nome,
-        ':fabricante' => $fabricante,
-        ':preco' => $preco,
-        ':estoque' => $estoque,
-        ':id' => $id
-      ]);
+  if ($preco !== '') {
+    $preco = str_replace(',', '.', $preco);
+  }
 
-      $sucesso = true;
-      // Atualiza $produto para preencher o form com novos valores
-      $produto['nome'] = $nome;
-      $produto['fabricante'] = $fabricante;
-      $produto['preco'] = $preco;
-      $produto['estoque'] = $estoque;
-    } catch (PDOException $e) {
-      $mensagemErro = 'Erro ao atualizar: ' . $e->getMessage();
+  if (!empty($nome) && !empty($fabricante) && $preco !== '' && $estoque !== '') {
+    if (!is_numeric($preco) || !ctype_digit($estoque)) {
+      $mensagemErro = 'Preço deve ser número e estoque deve ser um valor inteiro.';
+    } else {
+      try {
+        $sql = "UPDATE produtos SET nome = :nome, fabricante = :fabricante, preco = :preco, estoque = :estoque WHERE id = :id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+          ':nome' => $nome,
+          ':fabricante' => $fabricante,
+          ':preco' => $preco,
+          ':estoque' => $estoque,
+          ':id' => $id
+        ]);
+
+        $sucesso = true;
+        // Atualiza $produto para preencher o form com novos valores
+        $produto['nome'] = $nome;
+        $produto['fabricante'] = $fabricante;
+        $produto['preco'] = $preco;
+        $produto['estoque'] = $estoque;
+      } catch (PDOException $e) {
+        $mensagemErro = 'Erro ao atualizar: ' . $e->getMessage();
+      }
     }
   } else {
     $mensagemErro = 'Preencha todos os campos corretamente.';
@@ -89,15 +97,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="text" name="fabricante" placeholder="Fabricante" value="<?php echo htmlspecialchars($produto['fabricante']); ?>">
 
       <label>Preço:</label>
-      <input type="text" name="preco" placeholder="Preço" value="<?php echo htmlspecialchars($produto['preco']); ?>">
+      <input type="number" name="preco" placeholder="Preço" value="<?php echo htmlspecialchars($produto['preco']); ?>" step="0.01" min="0" inputmode="decimal">
 
       <label>Estoque:</label>
-      <input type="text" name="estoque" placeholder="Estoque" value="<?php echo htmlspecialchars($produto['estoque']); ?>">
+      <input type="number" name="estoque" placeholder="Estoque" value="<?php echo htmlspecialchars($produto['estoque']); ?>" step="1" min="0" inputmode="numeric">
             
-      <button class="btn">Salvar alterações<i class="ph ph-note-pencil"></i></button>
+      <button class="btn">Salvar<i class="ph ph-note-pencil"></i></button>
     </form>
 
-    <button onclick="window.location.href='index.php'" class="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
+    <button onclick="window.location.href='index.php'" class="btn" id="voltar">Voltar<i class="ph ph-arrow-left"></i></button>
   </div>
 
 

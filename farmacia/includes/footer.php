@@ -1,3 +1,3 @@
 <footer>
-    <h1>footer</h1>
+    <p>© 2026 Minha Empresa. Todos os direitos reservados.</p>
 </footer>

@@ -1,8 +1,8 @@
 :root {
-    --bg-page: #EAF4F4;
+    --bg-page: #EAF4F4; /* 60 */
     --auxiliar-color: #E0E0E0;
-    --secondary-color: #2A6F97;
-    --terciary-color: #43AA8B;
+    --secondary-color: #2A6F97; /* 30 */
+    --terciary-color: #43AA8B; /* 20 */
     --highlight-color: #e63946;
     --text-color: #1F2933;
 }
@@ -37,7 +37,9 @@ header, footer{
 }
 
 footer {
+    min-height: 50px;
     margin-top: auto;
+    justify-content: center;
 }
 
 header h1{
@@ -55,7 +57,7 @@ header img{
 }
 
 /* footer */
-footer h1{
+footer p{
     width: 100%;
     text-align: center;
 }
@@ -130,37 +132,68 @@ footer h1{
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    width: auto;
-    height: auto;
+    align-items: stretch;
+    gap: 20px;
+    width: 100%;
+    padding: 0 1rem;
 }
 
-/* Btns add e edit */
+/* Btns add*/
 
 .action-btns {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
     width: 100%;
 }
 
 .btn {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 0.5rem;
 
     background-color: var(--terciary-color);
-    font-size: 23px;
+    color: var(--text-color);
 
-    width: 145px;
-    height: 45px;
-    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+
+    width: 100%;
+    min-height: 45px;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+
+    box-shadow: 0 6px 14px rgba(67, 170, 139, 0.178);
+
+    cursor: pointer;
+}
+
+@media (hover: hover){
+
+    .btn:hover{ 
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(67,170,139,0.3);
+    }
+
+}
+
+.btn:active{
+    transform: scale(0.96);
 }
 
 /* table */
 .table {
-    width: 90%;
+    display: none;
+    width: 100%;
     margin-bottom: 50px;
+    max-height: 60vh;
 
     border-radius: 10px;
     overflow: auto;
@@ -176,16 +209,144 @@ table {
 }
 
 thead {
-    background: var(--secondary-color);
+    background-color: linear-gradient(
+        135deg,
+        var(--secondary-color),
+        #3b82b1
+    );
+
     height: 61px;
+}   
+
+thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--secondary-color);
+}
+
+tbody tr{
+    transition: background 0.2s ease;
+}
+
+@media (hover: hover){
+
+    tbody tr:hover{
+        background: rgba(42,111,151,0.08);
+    }
+
 }
 
 .table-body {
-    max-height: 240px;
-    overflow-y: auto;
-
     background: var(--auxiliar-color);
 }
+
+.cards {
+    display: flex;
+    width: 100%;
+    margin-bottom: 50px;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.product-card {
+    width: min(100%, 380px);
+
+    background: rgba(255,255,255,0.7);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.4);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 25px rgba(31, 41, 51, 0.08);
+
+    padding: 1rem;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+@media (hover: hover){
+
+    .product-card:hover{
+        transform: translateY(-4px);
+
+        box-shadow:
+            0 18px 35px rgba(31,41,51,0.12);
+    }
+
+}
+
+.product-details {
+    margin-top: 0.75rem;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.product-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.7rem 0.95rem;
+    border-radius: 12px;
+    background: var(--auxiliar-color);
+}
+
+.field-label {
+    font-size: 0.82rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.field-value {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.card-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.card-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #43aa8bc4;
+    color: var(--text-color);
+    border-radius: 12px;
+    min-width: 75px;
+    width: auto;
+    font-size: 0.95rem;
+    border: none;
+}
+
+.card-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(31, 41, 51, 0.12);
+}
+
+#lixo {
+    color: var(--highlight-color);
+    font-size: 35px;
+}
+
+#lapis {
+    color: orange;
+    font-size: 35px;
+}
+
 
 td, th {
     padding: 5px;
@@ -264,7 +425,7 @@ form input:focus::placeholder {
     border-radius: 10px;
 }
 
-.voltar {
+#voltar {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -281,6 +442,7 @@ form input:focus::placeholder {
 .delete-icon {
     background-color: transparent;
     font-size: 25px;
+    cursor: pointer;
 }
 
 .delete-icon i {
@@ -290,6 +452,7 @@ form input:focus::placeholder {
 .edit-icon {
     background-color: transparent;
     font-size: 25px;
+    cursor: pointer;
 }
 
 .edit-icon i {
@@ -390,6 +553,25 @@ form input:focus::placeholder {
 /* CSS PARA COMPUTADOR */
 @media (min-width: 768px){
     /* header */
+    body{
+        background:
+            radial-gradient(circle at top left, rgba(67, 170, 139, 0.301), transparent 25%),
+            radial-gradient(circle at bottom right, rgba(42, 111, 151, 0.281), transparent 25%),
+            var(--bg-page);
+    }
+
+    header, footer{
+        padding: 12px 20px;
+    
+    }
+
+    header{
+        backdrop-filter: blur(12px);
+
+        box-shadow:
+            0 4px 18px rgba(0,0,0,0.08);
+    }
+
     header img{
         height: 7%;
         width: 7%;
@@ -397,6 +579,12 @@ form input:focus::placeholder {
 
     header h1{
         font-size: 70px;
+    }
+
+    .content {
+        align-items: center;
+        gap: 30px;
+        padding: 0;
     }
 
     /* BARRA DE PESQUISA */
@@ -410,15 +598,70 @@ form input:focus::placeholder {
         width: 95%;
     }
 
+    .action-btns {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .btn {
+        width: 145px;
+        font-size: 23px;
+    }
+
+    .table {
+        width: 90%;
+        max-height: 520px;
+    }
+
     /* dropdwon */
     .dropdown:hover .dropdown-content {
         display: block;
         right: 0.5%;
+        z-index: 1001;
     }
 
     /* EXLCUIR.PHP */
     .delete-box{
         width: 45%;
+    }
+
+}
+
+@media (min-width: 470px) {
+    .table {
+        display: block;
+    }
+
+    .cards {
+        display: none;
+    }
+}
+
+@media (max-width: 470px) {
+    .content {
+        width: 100%;
+        gap: 20px;
+        padding: 0 1rem;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    .action-btns {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .product-card {
+        width: 100%;
     }
 }
 
