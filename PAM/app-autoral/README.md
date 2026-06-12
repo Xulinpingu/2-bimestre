@@ -94,22 +94,22 @@ Expandindo o escopo do projeto autoral, foram incorporados componentes avançado
 ## Componentes Avançados 1: Comunicação e Web
   ![Componentes-Avancados-Web-Design](Imagens/img1.png)
   
-- **Link da web (WebViewer / Sharing):** Componente empregado para abrir páginas externas, permitindo ao usuário acessar artigos informativos, notícias ou referências de fontes confiáveis diretamente dentro da navegação do jogo.
+- **Link da web (WebViewer / Sharing):** Componente empregado para abrir páginas externas, permitindo ao usuário acessar artigos informativos, notícias ou referências de fontes confiáveis diretamente dentro da navegação do jogo.<br>
   ![Componentes-Avancados-Web-Design](Imagens/img2.png)
   ![Componentes-Avancados-Web-Design](Imagens/img3.png)
 
-- **Correio eletrônico:** Sistema de envio automatizado de e-mails integrado aos blocos, utilizado para encaminhar relatórios de progresso ou pontuações diretamente do aparelho.
+- **Correio eletrônico:** Sistema de envio automatizado de e-mails integrado aos blocos, utilizado para encaminhar relatórios de progresso ou pontuações diretamente do aparelho.<br>
   ![Componentes-Avancados-Web-Design](Imagens/img4.png)
   ![Componentes-Avancados-Web-Design](Imagens/img5.png)
   ![Componentes-Avancados-Web-Design](Imagens/img6.png)
 
-## Componentes Avançados 2: Localização e Recursos do Dispositivo
+## Componentes Avançados 2: Localização e Recursos do Dispositivo<br>
   ![Componentes-Avancados-Web-Design](Imagens/img7.png)
   
-- **Mapa (Map):** Inclusão de mapas geográficos interativos na interface para visualização espacial de dados e coordenadas relacionadas ao tema do projeto.
+- **Mapa (Map):** Inclusão de mapas geográficos interativos na interface para visualização espacial de dados e coordenadas relacionadas ao tema do projeto.<br>
     ![Componentes-Avancados-Web-Design](Imagens/img8.png)
     ![Componentes-Avancados-Web-Design](Imagens/img9.png)
 
-- **Chamada telefônica (PhoneCall):** Utilização do componente nativo do sistema para acionar chamadas telefônicas diretamente a partir de cliques e eventos programados na lógica de blocos.
+- **Chamada telefônica (PhoneCall):** Utilização do componente nativo do sistema para acionar chamadas telefônicas diretamente a partir de cliques e eventos programados na lógica de blocos.<br>
     ![Componentes-Avancados-Web-Design](Imagens/img10.png)
     ![Componentes-Avancados-Web-Design](Imagens/img11.png)  
